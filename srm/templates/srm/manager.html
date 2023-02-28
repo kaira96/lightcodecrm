@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'personal' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+    <br>
+<br>
+<br>
+<div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    <a href="{% url 'students' %}"><h4 style="color: blue;" >Лиды: {{ lead_count }}</h4></a>
+    <br><br><br>
+    <a href="{% url 'leads' %}"><h4 style="color: blue;" >Студенты: {{ student_count }}</h4></a>
+    <br><br><br>
+    <a href="{% url 'income_add_for_manager' %}"><h4 style="color: blue;" >Оплата</h4></a>
+</div>
+</center>
+{% endblock %}
+

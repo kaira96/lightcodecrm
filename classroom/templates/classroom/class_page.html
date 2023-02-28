@@ -1,0 +1,75 @@
+{% extends 'classroom/parent_class.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+
+{% block hamburger %}
+    <div class="jumbotron jumbotron-fluid class_jumbotron">
+        <div class="container">
+        <h1 class="display-4 class_title">{{ classroom.classroom_name }}</h1>
+        <p class="lead class_code">Код класса: {{ classroom.class_code }}</p>
+<!--        <h6 class="lead class_code" ><a style="color: white;" href="{% url 'group_list' classroom.id %}">Список учителей и студентов</a></h6>-->
+        </div>
+    </div>
+    <input type="hidden" id="assignment" name="assignment">
+    <div class="contatiner_of_assignments">
+        {% if assignments %}
+            {% for assignment in assignments %}
+                {% for teacher in teachers %}
+                    {% if teacher.teacher.id == user.id %}
+                        <a href="{% url 'assignment_summary' assignment.id %}">
+                    {% else %}
+                        <a href="{% url 'sending_a_task' assignment.id %}" data-value="{{ assignment.id }}">
+                    {% endif %}
+                {% endfor %}
+                <div class="card assignment_card" style="width: 18rem;">
+                <div class="card-body">
+                <h5 class="card-title">{{assignment.assignment_name}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Задание опубликовано {{ assignment.posted_date }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Срок выполнения задания в {{ assignment.due_time }} / {{ assignment.due_date }}</h6>
+                </div>
+                </div>
+                </a>
+                </a>
+          {% endfor %}
+        {% endif %}
+      </div>
+
+    <div class="modal" tabindex="-1" id="group_list">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Оценка</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+         <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th style="text-align: center; margin: 0 10px;" >Менторы</th>
+            </tr>
+            {% for lead in leads %}
+            <tr>
+              <td style="text-align: center; margin: 0 10px;"><a href="{% url 'leads_detail' lead.id %}" >{{ lead.full_name }}</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+            <br><br><br>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <th style="text-align: center; margin: 0 10px;" >Менторы</th>
+            </tr>
+            {% for lead in leads %}
+            <tr>
+              <td style="text-align: center; margin: 0 10px;"><a href="{% url 'leads_detail' lead.id %}" >{{ lead.full_name }}</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

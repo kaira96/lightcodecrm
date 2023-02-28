@@ -1,0 +1,33 @@
+{% extends 'classroom/parent_class.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+
+{% block hamburger %}
+    <div class="jumbotron jumbotron-fluid class_jumbotron">
+        <div class="container">
+        <h1 class="display-4 class_title">{{ classroom.classroom_name }}</h1>
+        <p class="lead class_code">Код класса: {{ classroom.class_code }}</p>
+        </div>
+    </div>
+    <input type="hidden" id="assignment" name="assignment">
+    <div class="contatiner_of_assignments">
+      <div class="card assignment_card" style="width: 18rem;">
+      <div class="card-body">
+      <h3 class="card-title">Менторы</h3><br>
+      <h5 style="color: blue;">{{ teacher }}</h5>
+      </div>
+      </div>
+      </div>
+<br><br><br>
+    <div class="contatiner_of_assignments">
+      <div class="card assignment_card" style="width: 18rem;">
+      <div class="card-body">
+      <h3 class="card-title">Студенты</h3><br>
+          {% for student in students %}
+          <h5 style="color: black">{{ student }} </h5>
+          {% endfor %}
+      </div>
+      </div>
+      </div>
+{% endblock %}

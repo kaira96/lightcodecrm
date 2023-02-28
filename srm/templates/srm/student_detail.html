@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'leads' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+  <h3>Студент</h3>
+  <br>
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th style="text-align: center; margin: 0 10px;" >ФИО</th>
+      <th style="text-align: center; margin: 0 10px;" >Номер телефона</th>
+      <th style="text-align: center; margin: 0 10px;" >Курс</th>
+      <th style="text-align: center; margin: 0 10px;" >Ментор</th>
+      <th style="text-align: center; margin: 0 10px;" >Формат обучения</th>
+      <th style="text-align: center; margin: 0 10px;" >Сертификат</th>
+      <th style="text-align: center; margin: 0 10px;" >URL</th>
+      <th style="text-align: center; margin: 0 10px;" >Время обучения</th>
+      <th style="text-align: center; margin: 0 10px;" >Выпускник</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата создания</th>
+      <th style="text-align: center; margin: 0 10px;" >Общая оплата</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата последней оплаты</th>
+        <th style="text-align: center; margin: 0 10px;" >Описание</th>
+    </tr>
+    <tr>
+      <td style="text-align: center; margin: 0 10px;"><a href="{% url 'student_detail' student.id %}" >{{ student.full_name }}</a></td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.phone_number }}</td>
+      {% if student.course %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.course }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.teacher }}</td>
+        <td style="text-align: center; margin: 0 10px;" >{{ student.course.format }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.certificate }}</td>
+      {% if student.url %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.url }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.get_studying_time_display }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.is_graduate }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.created_date }}</td>
+      {% if student.total_payment  %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.total_payment }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+      {% if student.last_payment_date %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.last_payment_date }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+        {% if student.description %}
+            <td style="text-align: center; margin: 0 10px;" >{{ student.description }}</td>
+        {% else %}
+            <td style="text-align: center; margin: 0 10px;" ></td>
+        {% endif %}
+      <td><a href="{% url 'student_delete' student.id %}">Удалить</a></td>
+    </tr>
+  </tbody>
+</table>
+  <br>
+  <br>
+  <h4>Изменить объект</h4><br>
+  <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    <form method="POST" action=".">
+  {% csrf_token %}
+<!-- {{ form|crispy }}-->
+        <div class="row" >
+            <div class="col-6" >
+                {{ form.full_name|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.phone_number|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.course|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.teacher|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.studying_time|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.format|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.certificate|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.url|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.is_graduate|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.remainder|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-6" >
+                {{ form.description|as_crispy_field }}
+            </div>
+
+<button type="submit">Сохранить</button>
+         <br>
+        <br>
+        <h5>Студент хочет оплатить?</h5>
+        <select name="is_payed">
+            <option value="no">Нет</option>
+            <option value="on">Да</option>
+        </select>
+  </form>
+      </div>
+
+</center>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'personal' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+    <br>
+<br>
+<br>
+<div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    {% if income_total %}
+    <a href="{% url 'incomes' %}"><h4 style="color: blue;" >Доходы: <span style="color: black;" >{{ income_total }}</span></h4></a>
+    {% else %}
+    <a href="{% url 'incomes' %}"><h4 style="color: blue;" >Доходы: <span style="color: black;" >0</span></h4></a>
+    {% endif %}
+    <br><br><br>
+    {% if expense_total %}
+    <a href="{% url 'expenses_list' %}"><h4 style="color: blue;" >Расходы: <span style="color: black;" >{{ expense_total }}</span></h4></a>
+    {% else %}
+    <a href="{% url 'expenses_list' %}"><h4 style="color: blue;" >Расходы: <span style="color: black;" >0</span></h4></a>
+    {% endif %}
+    <br><br><br>
+    {% if income_total and expense_total %}
+    <a href="{% url 'income_list' %}"><h4 style="color: blue;" >Чистая прибыль: <span style="color: black;" >{{ net_profit }}</span></h4></a>
+    {% else %}
+    <a href="{% url 'income_list' %}"><h4 style="color: blue;" >Чистая прибыль: <span style="color: black;" >0</span></h4></a>
+    {% endif %}
+    <br><br><br>
+    {% if debtors %}
+    <a href="{% url 'debtor' %}"><h4 style="color: blue;" >Должники: <span style="color: black;" >{{ debtors }}</span></h4></a>
+    {% else %}
+    <a href="{% url 'debtor' %}"><h4 style="color: blue;" >Должники: <span style="color: black;" >0</span></h4></a>
+    {% endif %}
+</div>
+</center>
+{% endblock %}

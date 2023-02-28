@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'manager' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+  {{ filterset.form.media.css }}
+  <h3>Фильтрация для Лидов</h3>
+    <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+  <form method="get" id="incomes">
+    <div class="col-6" >
+        {{ filterset.form.full_name|as_crispy_field }}
+      </div>
+    <div class="col-6" >
+        {{ filterset.form.phone_number|as_crispy_field }}
+      </div>
+    <div class="col-6" >
+        {{ filterset.form.created_date|as_crispy_field }}
+      </div>
+    <button type="submit">Применить фильтр</button>
+</form>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{ filterset.form.media.js }}
+  </div>
+<br><br><br>
+  <h3>Лиды</h3>
+  <br>
+  <a style="font-size: 22px;" href="{% url 'lead_add' %}">Добавить Лида <i class="fa fa-arrow-right"></i></a>
+  <br><br>
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th style="text-align: center; margin: 0 10px;" >ФИО</th>
+      <th style="text-align: center; margin: 0 10px;" >Номер телефона</th>
+      <th style="text-align: center; margin: 0 10px;" >Курс</th>
+      <th style="text-align: center; margin: 0 10px;" >Описание</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата создания</th>
+    </tr>
+    {% for lead in leads %}
+    <tr>
+      <td style="text-align: center; margin: 0 10px;"><a href="{% url 'leads_detail' lead.id %}" >{{ lead.full_name }}</a></td>
+      <td style="text-align: center; margin: 0 10px;" >{{ lead.phone_number }}</td>
+      {% if lead.course %}
+        <td style="text-align: center; margin: 0 10px;" >{{ lead.course }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+      {% if lead.description %}
+        <td style="text-align: center; margin: 0 10px;" >{{ lead.description }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+      <td style="text-align: center; margin: 0 10px;" >{{ lead.created_date }}</td>
+      <td><a href="{% url 'lead_delete' lead.id %}">Удалить</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <br>
+<br>
+<br>
+<br>
+<br>
+
+<!--    <form method="POST" action=".">-->
+<!--  {% csrf_token %}-->
+<!-- {{ form.as_p }}-->
+<!--<button type="submit">Сохранить</button>-->
+<!--  </form>-->
+</center>
+{% endblock %}
+

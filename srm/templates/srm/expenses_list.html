@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'admin_choice' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+  <h3>Фильтрация для расходов</h3>
+  <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    <div class="row">
+      <form method="get">
+        <div class="col-6" >
+          {{ filterset.form.as_p }}
+        </div>
+        <button type="submit">Применить фильтр</button>
+      </form>
+    </div>
+  </div>
+  {% for obj in object_list %}
+  {% if obj.created_date|date:"Y-m-d" >= start_date|date:"Y-m-d" and obj.created_date|date:"Y-m-d" <= end_date|date:"Y-m-d" %}
+    {{ obj }}
+  {% endif %}
+{% endfor %}
+<br>
+  <h3>Расходы</h3>
+  <br><br><br>
+    <div>
+    <h2>Общая сумма расходов</h2>
+  <h4>{{ total }}</h4>
+    </div>
+  <br><br><br>
+  <a style="font-size: 22px;" href="{% url 'expense_add' %}">Добавить объект <i class="fa fa-arrow-right"></i></a>
+<br>
+<br>
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+  <table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th style="text-align: center; margin: 0 10px;" >Наименование расхода</th>
+      <th style="text-align: center; margin: 0 10px;" >Значение</th>
+      <th style="text-align: center; margin: 0 10px;" >Тип расхода</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата создания</th>
+    </tr>
+    {% for expense in object_list  %}
+    <tr>
+      <td style="text-align: center; margin: 0 10px;"><a href="{% url 'expense_detail' expense.id %}" >{{ expense.title }}</a></td>
+      <td style="text-align: center; margin: 0 10px;" >{{ expense.value }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ expense.get_flow_type_display }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ expense.created_date }}</td>
+        <td><a href="{% url 'expense_delete' expense.id %}">Удалить</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<!--    <form method="POST" action=".">-->
+<!--  {% csrf_token %}-->
+<!-- {{ form.as_p }}-->
+<!--<button type="submit">Сохранить</button>-->
+<!--  </form>-->
+</center>
+{% endblock %}
+

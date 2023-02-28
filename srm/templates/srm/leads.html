@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'manager' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+  <h3>Фильтрация для Студентов</h3>
+    <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+  <form method="get" id="incomes">
+<!--    {{ filter.form.as_p }}-->
+    <div class="row" >
+      <div class="col-6" >
+        {{ filterset.form.course|as_crispy_field }}
+      </div>
+      <div class="col-6" >
+        {{ filterset.form.is_graduate|as_crispy_field }}
+      </div>
+      <div class="col-6" >
+        {{ filterset.form.studying_time|as_crispy_field }}
+      </div>
+       <div class="col-6" >
+        {{ filterset.form.format|as_crispy_field }}
+      </div>
+    </div>
+    <div class="col-6" >
+        {{ filterset.form.teacher|as_crispy_field }}
+      </div>
+    <div class="col-6" >
+        {{ filterset.form.created_date|as_crispy_field }}
+      </div>
+    <button type="submit">Применить фильтр</button>
+</form>
+  </div>
+
+
+<!--    <form method="POST" action=".">-->
+<!--  {% csrf_token %}-->
+<!-- {{ form.as_p }}-->
+<!--<button type="submit">Сохранить</button>-->
+<!--  </form>-->
+    <br><br><br>
+  <hr style="height: 2px; color: black;" >
+
+    <h3>Студенты</h3>
+  <br>
+    <a style="font-size: 22px;" href="{% url 'student_add' %}">Добавить Студента <i class="fa fa-arrow-right"></i></a>
+<br>
+<br>
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th style="text-align: center; margin: 0 10px;" >ФИО</th>
+      <th style="text-align: center; margin: 0 10px;" >Номер телефона</th>
+      <th style="text-align: center; margin: 0 10px;" >Ментор</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата создания</th>
+      <th style="text-align: center; margin: 0 10px;" >Общая оплата</th>
+      <th style="text-align: center; margin: 0 10px;" >Остаток</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата последней оплаты</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+      <td style="text-align: center; margin: 0 10px;"><a href="{% url 'student_detail' student.id %}" >{{ student.full_name }}</a></td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.phone_number }}</td>
+        <td style="text-align: center; margin: 0 10px;" >{{ student.teacher }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.created_date }}</td>
+        <td style="text-align: center; margin: 0 10px;" >{{ student.total_payment }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ student.remainder }}</td>
+      {% if student.last_payment_date %}
+        <td style="text-align: center; margin: 0 10px;" >{{ student.last_payment_date }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+      <td><a href="{% url 'student_delete' student.id %}">Удалить</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  <br>
+<br>
+<br>
+</center>
+{% endblock %}
+

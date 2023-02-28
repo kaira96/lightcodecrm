@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br><br><br><br><br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'students' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<center>
+    <h3>Лид</h3>
+  <br>
+<style>
+  table, th, td {
+    border: 1px solid black;
+  }
+</style>
+<table class="table table-bordered">
+  <tbody>
+    <tr>
+      <th style="text-align: center; margin: 0 10px;" >ФИО</th>
+      <th style="text-align: center; margin: 0 10px;" >Номер телефона</th>
+      <th style="text-align: center; margin: 0 10px;" >Курс</th>
+      <th style="text-align: center; margin: 0 10px;" >Описание</th>
+      <th style="text-align: center; margin: 0 10px;" >Дата создания</th>
+      <th style="text-align: center; margin: 0 10px;" >Добавить</th>
+    </tr>
+    <tr>
+      <td style="text-align: center; margin: 0 10px;">{{ lead.full_name }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ lead.phone_number }}</td>
+      {% if lead.course %}
+        <td style="text-align: center; margin: 0 10px;" >{{ lead.course }}</td>
+      {% else %}
+        <td style="text-align: center; margin: 0 10px;" ></td>
+      {% endif %}
+      {% if lead.description %}
+        <td style="text-align: center; margin: 0 10px;" >{{ lead.description }}</td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      <td style="text-align: center; margin: 0 10px;" >{{ lead.created_date }}</td>
+      <td style="text-align: center; margin: 0 10px;" >{{ lead.is_add }}</td>
+            <td><a href="{% url 'lead_delete' lead.id %}">Удалить</a></td>
+
+    </tr>
+  </tbody>
+</table>
+  <br>
+  <br>
+  <br>
+  <h4>Изменить объект</h4><br>
+  <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    <form method="POST" action=".">
+  {% csrf_token %}
+<!-- {{ form|crispy }}-->
+        <div class="row" >
+            <div class="col-6" >
+                {{ form.full_name|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.phone_number|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.course|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.is_add|as_crispy_field }}
+            </div>
+        </div>
+        <div class="col-6" >
+            {{ form.description|as_crispy_field }}
+        </div>
+<button type="submit">Сохранить</button>
+  </form>
+      </div>
+
+</center>
+{% endblock %}
+

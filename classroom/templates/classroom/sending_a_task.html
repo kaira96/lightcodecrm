@@ -1,0 +1,28 @@
+{% extends 'classroom/parent_class.html' %}
+{% load static %}
+{% block head %}
+{% endblock %}
+{% load crispy_forms_tags %}
+
+
+{% block hamburger %}
+<div class="jumbotron jumbotron-fluid class_jumbotron">
+    <div class="container">
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <input type="file" id="lol" name="lol"><br><br>
+            <button type="submit" class="btn btn-primary">Отправить задание</button>
+        </form>
+        <br>
+        <h3>{{ submission.marks_alloted }}/{{ assignment.total_marks }}</h3><br>
+        {% if submission.status == 1 %}
+            <h3>{{ submission.get_status_display }}</h3>
+        {% elif submission.status == 2 %}
+            <h3 style="color: red;" >{{ submission.get_status_display }}</h3>
+        {% elif submission.status == 3 %}
+            <h3 style="color: green;" >{{ submission.get_status_display }}</h3>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

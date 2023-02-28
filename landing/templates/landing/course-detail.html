@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div id="about" class="about-us section">
+    <div class="container" >
+      <div class="row" >
+        <div class="col-lg-6 align-self-center">
+          <div class="section-heading">
+            <h4>Курс по <span style="color: blue;font-size: 29px;" >{{ course.title }}</span></h4>
+            <img src="https://templatemo.com/templates/templatemo_570_chain_app_dev/assets/images/heading-line-dec.png" alt="">
+            <p style="color: black;font-size: 17px;" >{{ course.additional_info }}</p>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="box-item">
+                <h4 style="color: blue;" >Время обучения</h4>
+                {% for formats in course.studying_time.all %}
+                  <p style="font-size: 17px;color: black;" >{{ formats.title }}</p>
+                {% endfor %}              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="box-item">
+                <h4 style="color: blue;" ><a href="#">Формат обучения</a></h4>
+                {% for format in course.format.all %}
+                <p style="font-size: 17px;color: black;" >{{ format.title }}</p>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="box-item">
+                <h4 style="color: blue;" ><a href="#">Ментор</a></h4>
+                <p style="font-size: 17px;color: black;"> {{ course.teacher }} </p>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="box-item">
+                <h4 style="color:blue;">Начало курса</h4>
+                  <p style="font-size: 17px;color: black;" >Идёт набор на данный курс успей записаться</p>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <p style="font-size: 17px;color: black;" >Готовим востребованных разработчиков с личным ментором с любого этапа.<br> Наши менторы будут с тобой от заявки и до твоего выпускного.</p>
+              <div class="gradient-button">
+                <a href="#newsletter">Записаться на курс</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="right-image">
+            <img src="https://templatemo.com/templates/templatemo_570_chain_app_dev/assets/images/about-right-dec.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
