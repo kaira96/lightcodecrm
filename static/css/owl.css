@@ -6,111 +6,111 @@
 /*
  *  Owl Carousel - Core
  */
-.owl-carousel {
+.owlg-carousel {
   display: none;
   width: 100%;
   -webkit-tap-highlight-color: transparent;
   /* position relative and z-index fix webkit rendering fonts issue */
   position: relative;
   z-index: 1; }
-  .owl-carousel .owl-stage {
+  .owlg-carousel .owlg-stage {
     position: relative;
     -ms-touch-action: pan-Y;
     touch-action: manipulation;
     -moz-backface-visibility: hidden;
     /* fix firefox animation glitch */ }
-  .owl-carousel .owl-stage:after {
+  .owlg-carousel .owlg-stage:after {
     content: ".";
     display: block;
     clear: both;
     visibility: hidden;
     line-height: 0;
     height: 0; }
-  .owl-carousel .owl-stage-outer {
+  .owlg-carousel .owlg-stage-outer {
     position: relative;
     overflow: hidden;
     /* fix for flashing background */
     -webkit-transform: translate3d(0px, 0px, 0px); }
-  .owl-carousel .owl-wrapper,
-  .owl-carousel .owl-item {
+  .owlg-carousel .owlg-wrapper,
+  .owlg-carousel .owlg-item {
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
     -ms-backface-visibility: hidden;
     -webkit-transform: translate3d(0, 0, 0);
     -moz-transform: translate3d(0, 0, 0);
     -ms-transform: translate3d(0, 0, 0); }
-  .owl-carousel .owl-item {
+  .owlg-carousel .owlg-item {
     position: relative;
     min-height: 1px;
     float: left;
     -webkit-backface-visibility: hidden;
     -webkit-tap-highlight-color: transparent;
     -webkit-touch-callout: none; }
-  .owl-carousel .owl-item img {
+  .owlg-carousel .owlg-item img {
     display: block;
     width: 100%; }
-  .owl-carousel .owl-nav.disabled,
-  .owl-carousel .owl-dots.disabled {
+  .owlg-carousel .owlg-nav.disabled,
+  .owlg-carousel .owlg-dots.disabled {
     display: none; }
-  .owl-carousel .owl-nav .owl-prev,
-  .owl-carousel .owl-nav .owl-next,
-  .owl-carousel .owl-dot {
+  .owlg-carousel .owlg-nav .owlg-prev,
+  .owlg-carousel .owlg-nav .owlg-next,
+  .owlg-carousel .owlg-dot {
     cursor: pointer;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
-  .owl-carousel .owl-nav button.owl-prev,
-  .owl-carousel .owl-nav button.owl-next,
-  .owl-carousel button.owl-dot {
+  .owlg-carousel .owlg-nav button.owlg-prev,
+  .owlg-carousel .owlg-nav button.owlg-next,
+  .owlg-carousel button.owlg-dot {
     background: none;
     color: inherit;
     border: none;
     padding: 0 !important;
     font: inherit; }
-  .owl-carousel.owl-loaded {
+  .owlg-carousel.owlg-loaded {
     display: block; }
-  .owl-carousel.owl-loading {
+  .owlg-carousel.owlg-loading {
     opacity: 0;
     display: block; }
-  .owl-carousel.owl-hidden {
+  .owlg-carousel.owlg-hidden {
     opacity: 0; }
-  .owl-carousel.owl-refresh .owl-item {
+  .owlg-carousel.owlg-refresh .owlg-item {
     visibility: hidden; }
-  .owl-carousel.owl-drag .owl-item {
+  .owlg-carousel.owlg-drag .owlg-item {
     -ms-touch-action: pan-y;
         touch-action: pan-y;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
-  .owl-carousel.owl-grab {
+  .owlg-carousel.owlg-grab {
     cursor: move;
     cursor: grab; }
-  .owl-carousel.owl-rtl {
+  .owlg-carousel.owlg-rtl {
     direction: rtl; }
-  .owl-carousel.owl-rtl .owl-item {
+  .owlg-carousel.owlg-rtl .owlg-item {
     float: right; }
 
 /* No Js */
-.no-js .owl-carousel {
+.no-js .owlg-carousel {
   display: block; }
 
 /*
  *  Owl Carousel - Animate Plugin
  */
-.owl-carousel .animated {
+.owlg-carousel .animated {
   animation-duration: 1000ms;
   animation-fill-mode: both; }
 
-.owl-carousel .owl-animated-in {
+.owlg-carousel .owlg-animated-in {
   z-index: 0; }
 
-.owl-carousel .owl-animated-out {
+.owlg-carousel .owlg-animated-out {
   z-index: 1; }
 
-.owl-carousel .fadeOut {
+.owlg-carousel .fadeOut {
   animation-name: fadeOut; }
 
 @keyframes fadeOut {
@@ -122,13 +122,13 @@
 /*
  * 	Owl Carousel - Auto Height Plugin
  */
-.owl-height {
+.owlg-height {
   transition: height 500ms ease-in-out; }
 
 /*
  * 	Owl Carousel - Lazy Load Plugin
  */
-.owl-carousel .owl-item {
+.owlg-carousel .owlg-item {
   /**
 			This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
 			calculation of the height of the owl-item that breaks page layouts

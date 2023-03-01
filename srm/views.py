@@ -371,7 +371,8 @@ def admin_choice(request):
         'expense_total': expense_total,
         'income_total': income_total,
         'debtors': debtors,
-        'net_profit': net_profit})
+        'net_profit': net_profit
+    })
 
 
 def income_add_for_manager(request):

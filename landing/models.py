@@ -58,20 +58,9 @@ class Review(models.Model):
         verbose_name_plural = 'Отзывы'
 
 
-class Tutorial(models.Model):
-    teacher = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Ментор')
-    created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
-
-    def __str__(self):
-        return str(self.teacher)
-
-    class Meta:
-        verbose_name = 'Туториал'
-        verbose_name_plural = 'Туториалы'
-
-
 class Section(models.Model):
     title = models.CharField(max_length=123, verbose_name='Название')
+    slug = models.SlugField()
     id_section = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
 
     def __str__(self):
@@ -88,9 +77,11 @@ class Section(models.Model):
 
 
 class Article(models.Model):
+    teacher = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Ментор')
+    topic_name = models.CharField(max_length=50)
     body = RichTextField(verbose_name='Контент')
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='Раздел')
-    teacher = models.ForeignKey(Tutorial, on_delete=models.CASCADE, verbose_name='Туториал')
+    created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):
         return str(self.section)

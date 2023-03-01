@@ -222,16 +222,16 @@
 		itemElement: 'div',
 		stageElement: 'div',
 
-		refreshClass: 'owl-refresh',
-		loadedClass: 'owl-loaded',
-		loadingClass: 'owl-loading',
-		rtlClass: 'owl-rtl',
-		responsiveClass: 'owl-responsive',
-		dragClass: 'owl-drag',
-		itemClass: 'owl-item',
-		stageClass: 'owl-stage',
-		stageOuterClass: 'owl-stage-outer',
-		grabClass: 'owl-grab'
+		refreshClass: 'owlg-refresh',
+		loadedClass: 'owlg-loaded',
+		loadingClass: 'owlg-loading',
+		rtlClass: 'owlg-rtl',
+		responsiveClass: 'owlg-responsive',
+		dragClass: 'owlg-drag',
+		itemClass: 'owlg-item',
+		stageClass: 'owlg-stage',
+		stageOuterClass: 'owlg-stage-outer',
+		grabClass: 'owlg-grab'
 	};
 
 	/**
@@ -473,7 +473,7 @@
 	 * Create item DOM elements
 	 */
 	Owl.prototype.initializeItems = function() {
-		var $items = this.$element.find('.owl-item');
+		var $items = this.$element.find('.owlg-item');
 
 		// if the items are already in the DOM, grab them and skip item initialization
 		if ($items.length) {
@@ -731,7 +731,7 @@
 	 */
 	Owl.prototype.registerEventHandlers = function() {
 		if ($.support.transition) {
-			this.$stage.on($.support.transition.end + '.owl.core', $.proxy(this.onTransitionEnd, this));
+			this.$stage.on($.support.transition.end + '.owlg.core', $.proxy(this.onTransitionEnd, this));
 		}
 
 		if (this.settings.responsive !== false) {
@@ -740,13 +740,13 @@
 
 		if (this.settings.mouseDrag) {
 			this.$element.addClass(this.options.dragClass);
-			this.$stage.on('mousedown.owl.core', $.proxy(this.onDragStart, this));
-			this.$stage.on('dragstart.owl.core selectstart.owl.core', function() { return false });
+			this.$stage.on('mousedown.owlg.core', $.proxy(this.onDragStart, this));
+			this.$stage.on('dragstart.owlg.core selectstart.owlg.core', function() { return false });
 		}
 
 		if (this.settings.touchDrag){
-			this.$stage.on('touchstart.owl.core', $.proxy(this.onDragStart, this));
-			this.$stage.on('touchcancel.owl.core', $.proxy(this.onDragEnd, this));
+			this.$stage.on('touchstart.owlg.core', $.proxy(this.onDragStart, this));
+			this.$stage.on('touchcancel.owlg.core', $.proxy(this.onDragEnd, this));
 		}
 	};
 
@@ -795,12 +795,12 @@
 		this._drag.stage.current = stage;
 		this._drag.pointer = this.pointer(event);
 
-		$(document).on('mouseup.owl.core touchend.owl.core', $.proxy(this.onDragEnd, this));
+		$(document).on('mouseup.owlg.core touchend.owlg.core', $.proxy(this.onDragEnd, this));
 
-		$(document).one('mousemove.owl.core touchmove.owl.core', $.proxy(function(event) {
+		$(document).one('mousemove.owlg.core touchmove.owlg.core', $.proxy(function(event) {
 			var delta = this.difference(this._drag.pointer, this.pointer(event));
 
-			$(document).on('mousemove.owl.core touchmove.owl.core', $.proxy(this.onDragMove, this));
+			$(document).on('mousemove.owlg.core touchmove.owlg.core', $.proxy(this.onDragMove, this));
 
 			if (Math.abs(delta.x) < Math.abs(delta.y) && this.is('valid')) {
 				return;
@@ -860,7 +860,7 @@
 			stage = this._drag.stage.current,
 			direction = delta.x > 0 ^ this.settings.rtl ? 'left' : 'right';
 
-		$(document).off('.owl.core');
+		$(document).off('.owlg.core');
 
 		this.$element.removeClass(this.options.grabClass);
 
@@ -873,7 +873,7 @@
 			this._drag.direction = direction;
 
 			if (Math.abs(delta.x) > 3 || new Date().getTime() - this._drag.time > 300) {
-				this._drag.target.one('click.owl.core', function() { return false; });
+				this._drag.target.one('click.owlg.core', function() { return false; });
 			}
 		}
 

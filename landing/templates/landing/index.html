@@ -3,8 +3,13 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/sudo.css' %}">
+<script src="{% static 'js/sudo.js' %}"></script>
+<link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
 <div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png);">
 <body>
   <div id="modal" class="popupContainer" style="display:none;">
@@ -402,33 +407,31 @@
             <h4>Отзывы наших учеников</h4>
             <img src="static/images/heading-line-dec.png" alt="">
           </div>
-<section class="testimonials">
-	<div class="container">
-
-      <div class="row">
-        <div class="col-sm-12">
-          <div id="customers-testimonials" class="owl-carousel">
+<!--      <br><br><br><br<br>&nbsp;-->
+<!--      <br><br><br><br<br>&nbsp;-->
+<!--      <br><br><br><br<br>&nbsp;-->
+          <link rel="stylesheet" href="https://unpkg.com/flickity@2.0/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2.0/dist/flickity.pkgd.min.js"></script>
+      <div class="container">
+        <div class="carousel-wrapper" style="margin-top:400px;">
+          <div class="carousel" data-flickity>
               {% for rewiew in reviews %}
-            <!--TESTIMONIAL 1 -->
-            <div class="item">
-              <div class="shadow-effect">
-                  <h4>{{ rewiew.name }}</h4>
-                    <p style="font-size: 17px; color: blue;"> {{ rewiew.direction }} </p>
-                  <div class="container mt-3" style="width: 100%; fon-size: 5px;">
-                <p style="color: black;" >{{ rewiew.description }}</p>
-                  </div>
-              </div>
+              <div class="container mt-3" style="width: 90%; fon-size: 10px;">
+            <div class="carousel-cell">
+              <h4 style="color: black;" >{{ rewiew.name }}</h4>
+              <p style="color: blue;">{{ rewiew.direction }}</p>
+                <p style="color: black;">{{ rewiew.description }}</p>
             </div>
-            <!--END OF TESTIMONIAL 1 -->
+            </div>
               {% endfor %}
           </div>
         </div>
       </div>
-      </div>
-    </section>
-    <!-- END OF TESTIMONIALS -->
-</center>
 </body>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     {% endblock %}
 
-</html>
+
+
+
+

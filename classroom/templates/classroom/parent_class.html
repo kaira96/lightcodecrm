@@ -21,7 +21,6 @@
               <span></span>
               <span></span>
               <ul id="menu" style="padding-top: 40px; padding-right: 3px; padding-left: 30px; box-shadow: 1px 1px 2px 1px #888888;">
-                
                 <div style="height: 100vh !important; overflow-y: auto; padding: none !important; margin:0% !important" >
                 {% if mappings %}
                   <h4 class="hamburger_heading"><b>Все классы</b></h4>
@@ -50,9 +49,7 @@
                 <li class="nav-item active">
                   <a class="mybtn myinfo mybtn-active" type="button" href="{% url 'delete_class' classroom.id %}" style="text-decoration: none;">Удалить класс</a>
                 </li>
-<!--                <li class="nav-item active">-->
-<!--                  <a class="mybtn myinfo mybtn-active" type="button" href="{% url 'add_student' classroom.id %}" style="text-decoration: none;">Добавить студента</a>-->
-<!--                </li>-->
+
               {% endif %}
               {% endfor %}
               <li class="nav-item active">
