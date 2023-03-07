@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <br>
+<br><br><br><br><br>
+<div class="container">
+  <a style="font-size: 22px;" href="{% url 'index' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+</div>
+<br><br><br><br><br>
+<center>
+        <h3>Ссылка на прямой эфир</h3>
+  <br>
+        {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+      <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+    <form method="POST" action=".">
+  {% csrf_token %}
+        <div class="row" >
+            <div class="col-6" >
+                {{ form.url|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.start_time|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.end_time|as_crispy_field }}
+            </div>
+            <div class="col-6" >
+                {{ form.is_active|as_crispy_field }}
+            </div>
+        </div>
+<button type="submit">Сохранить</button>
+  </form>
+      </div>
+
+
+</center>
+{% endblock %}

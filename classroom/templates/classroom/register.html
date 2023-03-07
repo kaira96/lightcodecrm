@@ -33,8 +33,8 @@
 {% block content_right %}
     <div class="login-page">
         <div class="myform">
-          <h1 class="signup_card"><b>Зарегистрироваться</b></h1>
-          <p class="signup_info">Создайте новую учетную запись, указав имя пользователя, номер телефона, и новый пароль.</p>
+          <h2 class="signup_card"><b>Зарегистрироваться</b></h2>
+          <p class="signup_info">Создайте новую учетную запись, указав номер телефона, имя пользователя, и новый пароль.</p>
         <form class="login-form" method="POST"  enctype="multipart/form-data">
         {% csrf_token %}
         {{form|crispy}}

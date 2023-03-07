@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
+{% now "TIME_FORMAT" %}
+{% load tz %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,6 +114,12 @@
                   <div class="col-lg-12">
                     <h2>Курсы програмирования Бишкек <span style="color: blue;" >Light Code</span>
                     <p style="font-size: 20px;" >Научись программировать за 3 месяца, обучаясь 5 дней в неделю по 3 часа в день только практика только хардкор</p>
+                        {% if stream %}
+                        <div class="gradient-button">
+                            <a href="{{ stream.url }}"><h4>Не пропустите уникальную возможность услышать экспертов по программированию в прямом эфире прямо сейчас!</h4></a>
+                        </div>
+                        <p>Прямой эфир начётся: {{ stream.start_time }}</p>
+                        {% endif %}
                   </div>
                 </div>
               </div>

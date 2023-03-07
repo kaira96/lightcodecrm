@@ -24,7 +24,7 @@
     <a href="{% url 'expenses_list' %}"><h4 style="color: blue;" >Расходы: <span style="color: black;" >0</span></h4></a>
     {% endif %}
     <br><br><br>
-    {% if income_total and expense_total %}
+    {% if income_total != None and expense_total != None %}
     <a href="{% url 'income_list' %}"><h4 style="color: blue;" >Чистая прибыль: <span style="color: black;" >{{ net_profit }}</span></h4></a>
     {% else %}
     <a href="{% url 'income_list' %}"><h4 style="color: blue;" >Чистая прибыль: <span style="color: black;" >0</span></h4></a>

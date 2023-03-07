@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.topnav {
+  background-color: #63707D;
+  overflow: hidden;
+  width: 15%;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+</style>
+<br>
+<br>
+<br>
+<br>
+<div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png);">
+<div style="height: 100vh !important; overflow-y: auto; padding: none !important; margin:0% !important" >
+<br><br><br><br><br>
+    <center>
+        <div class="col-lg-6">
+            {% if not is_subscribed %}
+                <h5 >Только до конца этой недели! Запишитесь на курс и получите бесплатный доступ к материалам, которые помогут вам стать экспертом в "{{ section.title }}"</h5>
+            {% endif %}
+        </div><br>
+<div class="gradient-button">
+    <a><h5>"Лучший способ обрести успех<br> - начать действовать сейчас"<br><br><h5 align="right">- Наполеон Хилл</h5></h5></a>
+</div>
+<div id="about" class="about-us section">
+    <div class="box-item" style="width: 40%;">
+        <h3><em>Все темы по программе: {{ section.title }}</em></h3>
+    </div>
+    {% if is_subscribed %}
+        <div class="col-lg-6 align-self-center">
+        <div class="section-heading">
+            <div class="col-lg-6">
+                {% for article in articles %}
+                    <a href="{% url 'content_view' article.slug %}"><div class="box-item">
+                        <h4><em>{{ article.topic_name }}</em></h4>
+                    </div>
+                        </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <h4>Запишитесь на курс "{{ section.title }}", что бы иметь доступ к бесплатному материалу</h4><br>
+        <form method="POST" action=".">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Записаться</button>
+        </form>
+    {% endif %}
+</div>
+</center>
+{% endblock %}
+

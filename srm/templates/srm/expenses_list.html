@@ -28,7 +28,11 @@
   <br><br><br>
     <div>
     <h2>Общая сумма расходов</h2>
-  <h4>{{ total }}</h4>
+      {% if total %}
+        <h4>{{ total }}</h4>
+      {% else %}
+        <h4>0</h4>
+      {% endif %}
     </div>
   <br><br><br>
   <a style="font-size: 22px;" href="{% url 'expense_add' %}">Добавить объект <i class="fa fa-arrow-right"></i></a>

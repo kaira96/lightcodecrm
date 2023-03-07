@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
+from django.template.defaultfilters import slugify
 
 
 User = get_user_model()
@@ -71,6 +72,10 @@ class Section(models.Model):
             k = k.id_section
         return ' -> '.join(full_path[::-1])
 
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+    #     super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Раздел'
         verbose_name_plural = 'Разделы'
@@ -78,7 +83,8 @@ class Section(models.Model):
 
 class Article(models.Model):
     teacher = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Ментор')
-    topic_name = models.CharField(max_length=50)
+    topic_name = models.CharField(max_length=50, verbose_name='Название темы')
+    slug = models.SlugField()
     body = RichTextField(verbose_name='Контент')
     section = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='Раздел')
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
@@ -86,6 +92,53 @@ class Article(models.Model):
     def __str__(self):
         return str(self.section)
 
+    def save(self, *args, **kwargs):
+        user = self.teacher
+        user.status = 4
+        user.save()
+        return super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+
+
+class SubscriptionToCourse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    course = models.ForeignKey(Section, on_delete=models.CASCADE, verbose_name='Курс')
+    created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
+
+    def __str__(self):
+        return str(self.user)
+
+    def save(self, *args, **kwargs):
+        user = self.user
+        user.status = 2
+        user.save()
+        return super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Подписка на курс'
+        verbose_name_plural = 'Подписка на курс'
+        unique_together = ['user', 'course']
+
+
+class Stream(models.Model):
+    url = models.TextField(verbose_name='Ссылка на прямой эфир')
+    start_time = models.DateTimeField(verbose_name='Время начала стрима')
+    end_time = models.DateTimeField(verbose_name='Время окончания стрима')
+    is_active = models.BooleanField(verbose_name='Актуально?')
+    # def save(self, *args, **kwargs):
+    #     # Получить все объекты Stream кроме текущего
+    #     other_streams = Stream.objects.exclude(pk=self.pk)
+    #     # Удалить все полученные объекты
+    #     other_streams.delete()
+    #     super(Stream, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = 'Прямой эфир'
+        verbose_name_plural = 'Прямой эфир'
+
+
+
+

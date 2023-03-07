@@ -360,19 +360,25 @@ def manager(request):
 
 def admin_choice(request):
     expense = Expense.objects.all()
-    expense_total = expense.aggregate(total=Sum('value'))['total']
+    # expense_total = expense.aggregate(total=Sum('value'))['total']
     income = Income.objects.all()
-    income_total = income.aggregate(total=Sum('value'))['total']
+    # income_total = income.aggregate(total=Sum('value'))['total']
     students = Student.objects.all()
     debtors = students.aggregate(total=Sum('remainder'))['total']
-    net_profit = income_total - expense_total
+    # net_profit = income_total - expense_total
+    expense_total = expense.aggregate(total=Sum('value'))['total'] or 0
+    income_total = income.aggregate(total=Sum('value'))['total'] or 0
+
+    if income_total is not None and expense_total is not None:
+        net_profit = income_total - expense_total
+    else:
+        net_profit = 0
 
     return render(request, template_name='srm/admin_choice.html', context={
         'expense_total': expense_total,
         'income_total': income_total,
         'debtors': debtors,
-        'net_profit': net_profit
-    })
+        'net_profit': net_profit})
 
 
 def income_add_for_manager(request):

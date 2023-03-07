@@ -21,6 +21,12 @@ class Student(models.Model):
     def __str__(self):
         return str(self.student)
 
+    def save(self, *args, **kwargs):
+        user = self.student
+        user.status = 2
+        user.save()
+        return super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'Студент'
         verbose_name_plural = 'Студент'
@@ -33,6 +39,12 @@ class Teacher(models.Model):
 
     def __str__(self):
         return str(self.teacher)
+
+    def save(self, *args, **kwargs):
+        user = self.teacher
+        user.status = 4
+        user.save()
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Ментор'

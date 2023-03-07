@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+.topnav {
+  background-color: #63707D;
+  overflow: hidden;
+  width: 15%;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+</style>
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+
+<div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png); display: flex;">
+    <menu class="topnav" style=" margin-top: 100px !important;">
+        <h5 ><strong>{{ article.section }}:</strong></h5>
+        {% for article in articles %}
+            <li><a href="{% url 'content_view' article.slug %}">{{ article.topic_name }}</a></li>
+        {% endfor %}
+    </menu>
+    <div class="container mt-3" style="width: 75%; fon-size: 10px; flex: 1;">
+        <div id="about" class="about-us section">
+            <div class="col-lg-6 align-self-center">
+                <div class="section-heading">
+                    <div class="col-lg-6">
+                        <div class="box-item">
+                            <h4><em>{{ article.topic_name }}</em></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="post">
+            <h4>{{ article.body|safe }}</h4>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

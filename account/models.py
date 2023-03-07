@@ -47,7 +47,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     phone_number = PhoneNumberField(
-        region='KG',
         verbose_name=('Номер телефона'),
         unique=True
     )

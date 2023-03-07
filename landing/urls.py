@@ -9,4 +9,11 @@ urlpatterns = [
     path('personal_area/', views.personal_area, name='personal_area'),
     path('category/', views.category_view, name='tutorials'),
     path('category/<slug:slug>/', views.category_detail, name='tutorial-detail'),
+    path('tutorial-content/<slug:slug>/', views.theme_view, name='tutorial-content'),
+    path('content-view/<slug:slug>/', views.content_view, name='content_view'),
+    path('add-category/', views.add_category, name='add_category'),
+    path('add-article/', views.add_article, name='add_article'),
+    path('registration/', views.register_view, name='registration'),
+    path('authentication/', views.authentication_view, name='authentication'),
+    path('add-url-stream/', views.add_url_stream, name='add_url_stream'),
 ]

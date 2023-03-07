@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout, authenticate, login
 from django.http import JsonResponse
 from itertools import chain
@@ -80,7 +80,7 @@ def unenroll_class(request, classroom_id):
 
 
 @login_required(login_url='login')
-# @teacher_required('home')
+@user_passes_test(lambda u: u.is_superuser or u.status == 4, login_url='/register/')
 def delete_class(request, classroom_id):
     classroom = Classroom.objects.get(pk=classroom_id)
     teacher_mapping = Teacher.objects.get(teacher=request.user, classroom=classroom)

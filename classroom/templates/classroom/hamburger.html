@@ -20,19 +20,16 @@
       <a class="navbar-brand" href="#" style="font-size:250% !important; color:#2e45c7 !important; margin-left: 7%; margin-right: 30%"><b>Classroom</b></a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
+              {% if user.is_admin or user.status == 4 %}
             <li class="nav-item active">
               <button class="mybtn myinfo mybtn-active" type="button" data-toggle="modal" data-target="#add_class">Создать класс</button>
             </li>
+              {% endif %}
             <li class="nav-item active">
               <button class="mybtn myinfo mybtn-active" type="button" data-toggle="modal" data-target="#join_class">Присоединиться к классу</button>
             </li>
             <li class="nav-item active">
               <a href="{% url 'logout' %}" type="button" class="mybtn myinfo mybtn-active" style="text-decoration: none;">Выйти</a>
-            </li>
-            <li class="nav-item active">
-              <div class="image_cropper">
-                <img src="{% get_media_prefix %}{{ user.profile_photo }}" alt="Profile Pic" class="profile_pic_style">
-              </div>
             </li>
           </ul>
       </div>
