@@ -1,13 +1,24 @@
 {% extends 'classroom/parent_class.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block head %}
 {% endblock %}
 
 {% block hamburger %}
+<style>
+@media (max-width: 400px) {
+    .classroom-card-title {
+        font-weight: 700;
+        font-size: 25px;
+    }
+}
+</style>
     <div class="jumbotron jumbotron-fluid class_jumbotron">
         <div class="container">
-        <h1 class="display-4 class_title">{{ classroom.classroom_name }}</h1>
-        <p class="lead class_code">Код класса: {{ classroom.class_code }}</p>
+        <h1 class="display-4 class_title classroom-card-title">{{ classroom.classroom_name }}</h1>
+        <p class="lead class_code">{% trans 'Код класса' %}: {{ classroom.class_code }}</p>
+        <h6 class="lead class_code" ><a style="color: white;" href="{% url 'group_list' classroom.id %}">{% trans 'Список учителей и студентов' %}</a></h6>
         </div>
     </div>
     <input type="hidden" id="assignment" name="assignment">
@@ -15,7 +26,7 @@
         {% if assignments %}
             {% for assignment in assignments %}
                 {% for teacher in teachers %}
-                    {% if teacher.teacher.id == user.id %}
+                    {% if teacher.teacher.id == user.id or user.status == 4 %}
                         <a href="{% url 'assignment_summary' assignment.id %}">
                     {% else %}
                         <a href="{% url 'sending_a_task' assignment.id %}" data-value="{{ assignment.id }}">
@@ -24,8 +35,8 @@
                 <div class="card assignment_card" style="width: 18rem;">
                 <div class="card-body">
                 <h5 class="card-title">{{assignment.assignment_name}}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Задание опубликовано {{ assignment.posted_date }}</h6>
-                <h6 class="card-subtitle mb-2 text-muted">Срок выполнения задания в {{ assignment.due_time }} / {{ assignment.due_date }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{% trans 'Задание опубликовано' %} {{ assignment.posted_date }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">{% trans 'Срок выполнения задания в' %} {{ assignment.due_time }} / {{ assignment.due_date }}</h6>
                 </div>
                 </div>
                 </a>
@@ -38,7 +49,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Оценка</h5>
+            <h5 class="modal-title">{% trans 'Оценка' %}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -46,7 +57,7 @@
          <table class="table table-bordered">
           <tbody>
             <tr>
-              <th style="text-align: center; margin: 0 10px;" >Менторы</th>
+              <th style="text-align: center; margin: 0 10px;" >{% trans 'Менторы' %}</th>
             </tr>
             {% for lead in leads %}
             <tr>
@@ -59,7 +70,7 @@
         <table class="table table-bordered">
           <tbody>
             <tr>
-              <th style="text-align: center; margin: 0 10px;" >Менторы</th>
+              <th style="text-align: center; margin: 0 10px;" >{% trans 'Менторы' %}</th>
             </tr>
             {% for lead in leads %}
             <tr>
@@ -70,5 +81,21 @@
         </div>
       </div>
     </div>
+<script>
+     const menu = document.querySelector('.sideBarMenuIcon');
+  const sideBar = document.querySelector('.sideBar');
+  const sideBarMenu = document.querySelector('.sideBarMenu');
+  // Проверяем, есть ли значение 'showMenu' в localStorage
+  const showMenu = localStorage.getItem('showMenu');
+  if (showMenu === 'true') {
+    sideBarMenu.classList.add('show');
+  }
 
+  menu.onclick = () => {
+    // Инвертируем состояние меню
+    sideBarMenu.classList.toggle('show');
+    // Сохраняем состояние меню в localStorage
+    localStorage.setItem('showMenu', sideBarMenu.classList.contains('show'));
+  }
+</script>
 {% endblock %}

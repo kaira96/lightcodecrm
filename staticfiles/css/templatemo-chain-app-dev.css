@@ -985,7 +985,7 @@ Services Style
   bottom: -300px;
   width: 261px;
   height: 368px;
-  z-index: 0;
+  z-index: -10;
 }
 
 .services:before {
@@ -997,7 +997,7 @@ Services Style
   top: 0;
   width: 1136px;
   height: 244px;
-  z-index: 0;
+  z-index: -10;
 }
 
 .services .section-heading {
@@ -2054,7 +2054,7 @@ responsive
   .pricing-item-regular {
     margin-bottom: 30px;
   }
-  .our-portfolio .owl-nav {
+  .our-portfolio .owlg-nav {
     display: none !important;
   }
   .contact-info {

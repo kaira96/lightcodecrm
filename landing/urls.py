@@ -15,5 +15,9 @@ urlpatterns = [
     path('add-article/', views.add_article, name='add_article'),
     path('registration/', views.register_view, name='registration'),
     path('authentication/', views.authentication_view, name='authentication'),
+    path('logout/', views.logout_view, name='exit'),
     path('add-url-stream/', views.add_url_stream, name='add_url_stream'),
+    path('article-list/', views.article_list, name='article_list'),
+    path('article-detail/<int:pk>/', views.article_detail, name='article_detail'),
+    path('article-delete/<int:pk>/', views.article_delete, name='article_delete'),
 ]

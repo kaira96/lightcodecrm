@@ -173,6 +173,7 @@ class Expense(models.Model):
         ),
         verbose_name='Тип расхода'
     )
+    date_of_payment = models.DateField(verbose_name='Дата')
     created_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
 
     def __str__(self):

@@ -12,13 +12,15 @@
 <center>
         <h3>Ссылка на прямой эфир</h3>
   <br>
-        {% if messages %}
-    <ul class="messages">
+    <div class="container" style="width: 25%;">
+    {% if messages %}
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
         {% endfor %}
-    </ul>
     {% endif %}
+        </div>
       <div class="container mt-3" style="width: 55%; fon-size: 10px;">
     <form method="POST" action=".">
   {% csrf_token %}

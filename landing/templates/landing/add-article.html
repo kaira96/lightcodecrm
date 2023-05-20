@@ -1,43 +1,86 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-
+{% block nav %}
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{% url 'index' %}" class="logo">
+                <h4 style="color: black;"><br><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+  <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+</svg> LightCode</h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="{% url 'tutorials' %}">Туториалы</a></li>
+              {% if not user.is_authenticated %}
+              <li class="scroll-to-section"><a href="{% url 'registration' %}">Авторизация</a></li>
+              {% endif %}
+              {% if user.is_authenticated %}
+                <li class="scroll-to-section"><a href="{% url 'exit' %}">Выйти</a></li>
+                <li>
+                    <div class="gradient-button">
+                        <a id="modal_trigger" href="{% url 'personal_area' %}">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/></svg>
+                        </a>
+                    </div>
+                </li>
+              {% endif %}
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% endblock nav %}
 {% block content %}
   <br>
 <br><br><br><br><br>
 <div class="container">
-  <a style="font-size: 22px;" href="{% url 'tutorials' %}"><i class="fa fa-arrow-left"></i>Назад </a>
+  <a style="font-size: 22px;" href="{% url 'article_list' %}"><i class="fa fa-arrow-left"></i>Назад </a>
 </div>
 <br><br><br><br><br>
+    {{ form.media.css }}
 <center>
         <h3>Статья</h3>
   <br>
-        {% if messages %}
-    <ul class="messages">
+   <div class="container" style="width: 25%;">
+    {% if messages %}
         {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            <div class="alert alert-danger">
+                {{ message }}
+            </div>
         {% endfor %}
-    </ul>
     {% endif %}
+        </div>
       <div class="container mt-3" style="width: 55%; fon-size: 10px;">
     <form method="POST" action=".">
   {% csrf_token %}
-<!-- {{ form|crispy }}-->
-        {{ form.media }}
+        <!-- {{ form|crispy }}-->
         <div class="row" >
             <div class="col-6" >
                 {{ form.topic_name|as_crispy_field }}
             </div>
-            <div class="col-6" >
+            <div class="col-6 d-none" >
                 {{ form.slug|as_crispy_field }}
             </div>
-        </div>
-        <div class="col-6" >
+            <div class="col-6" >
                 {{ form.section|as_crispy_field }}
             </div>
-        <div class="col-6" >
-                {{ form.body|as_crispy_field }}
-            </div>
+        </div>
+        <div class="col-6" style="margin-right: 300px;">
+            {{ form.body|as_crispy_field }}
+        </div>
 <button type="submit">Сохранить</button>
         <br><br>
         <h5>Хотите сохранить и добавить другой объект?</h5>
@@ -46,21 +89,23 @@
             <option value="on">Да</option>
         </select>
   </form>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{ form.media.js }}
       </div>
-    <script>
+<script>
 $(document).ready(function(){
     $('#id_topic_name').on('keyup', function(){
         var topic_name = $(this).val();
         var slug = '';
-        if (/^[a-zA-Z0-9]+$/.test(topic_name)) {
-            slug = topic_name.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        if (/^[a-zA-Z0-9\/\\|#.+ ]+$/.test(topic_name)) {
+        slug = topic_name.toLowerCase().replace(/[^a-zA-Z0-9\/\\|#.+]+/g, '-').replace(/[^\w\/\\|#.+]+/g, '-').replace(/[\\/|]/g, '_').replace(/#/g, '-sharp-').replace(/\+/g, '-plus-').replace(/\./g, '-dot-').replace(/ /g, '-').replace(/\//g, '(/)').replace(/\|/g, '(|)').replace(/\\/g, '(\\)').replace(/(^-|-$|_)+/g, '');
         } else if (/^[а-яА-Яa-zA-Z0-9\s]+$/.test(topic_name)) {
             var rus_to_lat = {
-                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya', ' ': '-'
+                'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd', 'е': 'e', 'ё': 'yo', 'ж': 'zh', 'з': 'z', 'и': 'i', 'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n', 'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't', 'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch', 'ш': 'sh', 'щ': 'sch', 'ъ': '', 'ы': 'y', 'ь': '', 'э': 'e', 'ю': 'yu', 'я': 'ya', ' ': '-', '#': '_sharp_', '+': '_plus_', '.': '_dot_', '/': '(/)', '|': '(|)', '\\': '(\\)'
             };
             slug = topic_name.toLowerCase().replace(/[^\u0000-\u007E]/g, function(c) {
                 return (typeof rus_to_lat[c] != 'undefined') ? rus_to_lat[c] : '-';
-            }).replace(/[^a-zA-Z0-9\-]+/g, '-').replace(/(^-|-$)+/g, '');
+            }).replace(/[^\w]+/g, '-').replace(/[\\/|]/g, '_').replace(/(^-|-$|_)+/g, '');
         }
         $('#id_slug').val(slug);
     });

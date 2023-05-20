@@ -666,7 +666,7 @@ header
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1400px) {
   .pre-header ul.info li:last-child,
   .pre-header ul.info li:nth-child(6) {
     display: none!important;
@@ -776,7 +776,7 @@ header
   }
 }
 
-@media (min-width: 767px) {
+@media (min-width: 1400px) {
   .header-area .main-nav .nav {
     display: flex !important;
   }

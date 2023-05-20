@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+{% block content %}
+<br><br><br>
+<br><br><br>
+<center>
+    <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+        <h1>404</h1><br>
+        <h4>{% trans 'К сожалению, запрашиваемая вами страница не может быть найдена. Вероятно, адрес страницы был неверно введен или страница была удалена.' %}</h4><br><br>
+        <h6>{% trans 'Чтобы решить эту проблему, вы можете попробовать следующее' %}:<br><br>
+            1: {% trans 'Проверьте правильность адреса страницы, чтобы убедиться, что он был правильно набран.' %}<br><br>
+            2: {% trans 'Используйте поиск на сайте, чтобы найти нужную информацию.' %}<br><br>
+            3: {% trans 'Перейдите на главную страницу сайта и попробуйте найти информацию, которую вы искали.' %}</h6><br><br>
+        <button class="btn btn-primary"><a href="{% url 'index' %}" style="color: white;">{% trans 'Вернуться на главную страницу' %}</a></button>
+    </div>
+</center>
+{% endblock %}

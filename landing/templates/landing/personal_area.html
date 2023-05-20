@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+<style>
+  @media (max-width: 991px) {
+    #right-images-for-hidden {
+    display: none
+    }
+  }
+</style>
 <div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png);">
 <div id="about" class="about-us section">
     <div class="container">
@@ -10,20 +18,33 @@
           <div class="section-heading">
             <div class="col-lg-6">
               <div class="box-item">
-                <h4><em>Личный кабинет</em></h4>
+                <h4><em>{% trans 'Личный кабинет' %}</em></h4>
               </div>
             </div>
+              {% if user.is_banned == 2 or user.is_banned == 3%}
+                  <div class="container" style="width: 75%;">
+                      <div class="alert alert-danger">
+                          {% if user.is_banned == 2 %}
+                            <h7>{% trans 'Ваш аккаунт заблокирован на некоторое время из-за нарушения наших правил. Если у вас есть вопросы, свяжитесь с нами через форму обратной связи.' %}</h7>
+                          {% endif %}
+                          {% if user.is_banned == 3 %}
+                            <h7>{% trans 'Ваш аккаунт заблокирован навсегда из-за нарушения наших правил. Пожалуйста, свяжитесь с нами, если у вас есть возражения.' %}</h7>
+                          {% endif %}
+                      </div>
+                  </div>
+              {% endif %}
+            <h5>{% trans 'Добро пожаловать в ваш личный кабинет!' %}</h5>&nbsp;
             <h4>{{ user.username }}</h4>
-            <img src="../static/images/heading-line-dec.png" alt="">
-            <br>&nbsp;<h5>Добро пожаловать в ваш личный кабинет!</h5>
+            <h5>Статуc: {{ user.get_status_display }}</h5>
+            <img src="{% static 'images/heading-line-dec.png' %}" alt="">
           </div>
           <div class="row">
             <div class="col-lg-6">
               <div class="box-item">
                 <h3 style="color: blue;">Classroom</h3>
                 {% for student in students %}
-                  <h5>{{ student.classroom }}</h5>
-                <h6>Ментор:
+                  <a href="{% url 'render_class' student.classroom.id %}" style="color: black;"><h5>{{ student.classroom }}</h5></a>
+                <h6>{% trans 'Ментор' %}:
         {% for teacher in student.classroom.teacher_set.all %}
             {{ teacher.teacher.username }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
@@ -34,27 +55,27 @@
             </div>
             <div class="col-lg-6">
               <div class="box-item">
-                <h4 style="color: blue;">Онлайн курсы</h4>
+                <h4 style="color: blue;">{% trans 'Онлайн курсы' %}</h4>
                 {% for subscription in subscriptions %}
-            <h5>{{ subscription.course }}</h5>
-            <h6>Ментор: {{ subscription.course.article_set.first.teacher }}</h6>
+                  <a href="{% url 'tutorial-content' subscription.course.slug %}" style="color: black;"><h5>{{ subscription.course }}</h5></a>
+            <h6>{% trans 'Ментор' %}: {{ subscription.course.article_set.first.teacher }}</h6>
             <hr>
         {% endfor %}
               </div>
             </div>
             <div class="col-lg-12">
-              <p style="color: black;">Спасибо за интерес к школе IT-технологий LightCode! Мы предлагаем курсы по программированию, веб-разработке, аналитике данных и многому другому. Наши опытные преподаватели помогут вам освоить новые навыки и стать экспертом в выбранной области. <br>У нас есть гибкая система обучения, которая позволяет выбрать удобное расписание и формат занятий. Вы можете выбрать индивидуальные занятия, групповые курсы или дистанционное обучение. <br>Мы также предлагаем практические задания и проекты, которые помогут вам укрепить свои знания и подготовиться к реальным задачам на рынке труда. <br>Присоединяйтесь к LightCode и начните свой путь в мире IT-технологий уже сегодня!</p>
+              <p style="color: black;">{% trans 'Спасибо за интерес к школе IT-технологий LightCode! Мы предлагаем курсы по программированию, веб-разработке, аналитике данных и многому другому. Наши опытные преподаватели помогут вам освоить новые навыки и стать экспертом в выбранной области.' %} <br>{% trans 'У нас есть гибкая система обучения, которая позволяет выбрать удобное расписание и формат занятий. Вы можете выбрать индивидуальные занятия, групповые курсы или дистанционное обучение.' %} <br>{% trans 'Мы также предлагаем практические задания и проекты, которые помогут вам укрепить свои знания и подготовиться к реальным задачам на рынке труда.' %} <br>{% trans 'Присоединяйтесь к LightCode и начните свой путь в мире IT-технологий уже сегодня!' %}</p>
               <br>
               <div class="gradient-button">
                 <a href="#">LightCode</a>
               </div>
-              <span style="color: black;">Учитесь программированию вместе с LightCode </span>
+              <span style="color: black;">{% trans 'Учитесь программированию вместе с LightCode' %} </span>
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div id="right-images-for-hidden" class="col-lg-6">
           <div class="right-image">
-            <img src="../static/images/about-right-dec.png" alt="">
+            <img src="{% static 'images/about-right-dec.png' %}" alt="">
           </div>
         </div>
       </div>

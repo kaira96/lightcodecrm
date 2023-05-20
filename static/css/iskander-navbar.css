@@ -1,0 +1,68 @@
+    .dont-close-never {
+        display: flex!important;
+    }
+
+   .sideBar {
+    position: fixed;
+    height: auto;
+    top: 40px;
+    right: 20px;
+    width: auto;
+  background: transparent;: #ccc;
+  list-style: none;
+  padding: 5px;
+  transition: 0.5s;
+  z-index: 999;
+}
+
+.sideBarInner {
+  display: grid;
+  justify-content: end;
+  gap: 12px 0;
+}
+
+.sideBarMenu {
+  height: 700px;
+  overflow-y: auto;
+  gap: 15px;
+  list-style: none;
+  padding: 10px;
+  background: #E4E1E1;
+}
+.sideBarMenuIcon {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sideBarItem {
+  cursor: pointer;
+  padding: 0 10px;
+  transition: 0.3s;
+}
+
+
+ @media(max-width: 991px;) {
+        .dont-close-never {
+            display: flex!important;
+        }
+    }
+
+    .sideBarMenu {
+    display: none;
+  }
+
+  /* Отображение меню, если localStorage содержит соответствующее значение */
+  .sideBarMenu.show {
+    display: block;
+  }
+.hidden-desktop {
+display: none;
+}
+
+@media (max-width: 991px) {
+   .hidden-desktop {
+   background: red;
+        display: block;
+    }
+}

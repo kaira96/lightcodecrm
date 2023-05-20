@@ -1,8 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
-
+<style>
+  @media (max-width: 991px) {
+    #right-images-for-hidden {
+    display: none
+    }
+  }
+</style>
 <div id="about" class="about-us section">
     <div class="container" >
       <div class="row" style="flex-direction: row-reverse;">
@@ -15,7 +22,7 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="box-item">
-                <h4 style="color: blue;" >Курсы</h4>
+                <h4 style="color: blue;" >{% trans 'Курсы' %}</h4>
                 {% for course in courses %}
                   <p style="font-size: 17px;color: black;" >{{ course.title }}</p>
                 {% endfor %}
@@ -23,7 +30,7 @@
             </div>
             <div class="col-lg-6">
               <div class="box-item">
-                <h4 style="color: blue;" ><a href="#">Формат обучения</a></h4>
+                <h4 style="color: blue;" ><a href="#">{% trans 'Формат обучения' %}</a></h4>
                 {% for course in courses %}
                   {% for i in course.format.all %}
                     <p style="font-size: 17px;color: black;" >{{ i.title }}</p>
@@ -33,7 +40,7 @@
             </div>
             <div class="col-lg-6">
               <div class="box-item">
-                <h4 style="color: blue;" ><a href="#">Время обучения</a></h4>
+                <h4 style="color: blue;" ><a href="#">{% trans 'Время обучения' %}</a></h4>
                  {% for course in courses %}
                   {% for course_time in course.studying_time.all %}
                     <p style="font-size: 17px;color: black;" >{{ course_time.title }}</p>
@@ -43,19 +50,19 @@
             </div>
             <div class="col-lg-6">
               <div class="box-item">
-                <h4 style="color:blue;">Начало курса</h4>
-                  <p style="font-size: 17px;color: black;" >Идёт набор на данный курс успей записаться</p>
+                <h4 style="color:blue;">{% trans 'Начало курса' %}</h4>
+                  <p style="font-size: 17px;color: black;" >{% trans 'Идёт набор на данный курс успей записаться' %}</p>
               </div>
             </div>
             <div class="col-lg-12">
-              <p style="font-size: 17px;color: black;" >Готовим востребованных разработчиков с личным ментором с любого этапа.<br> Наши менторы будут с тобой от заявки и до твоего выпускного.</p>
+              <p style="font-size: 17px;color: black;" >{% trans 'Готовим востребованных разработчиков с личным ментором с любого этапа.' %}<br> {% trans 'Наши менторы будут с тобой от заявки и до твоего выпускного.' %}</p>
               <div class="gradient-button">
-                <a href="#newsletterr">Записаться на курс</a>
+                <a href="#newsletterr">{% trans 'Записаться на курс' %}</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div id="right-images-for-hidden" class="col-lg-6">
           <div class="right-image">
             <div class="container mt-3" style="width: 98%; height: 98%; fon-size: 10px;">
             <img src="{{ employee.image.url }}" style="width: 250px; height: 300px; object-fit: cover;" class="card-img-top" alt="...">

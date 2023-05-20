@@ -3,7 +3,7 @@ from django_filters import DateFromToRangeFilter
 from django import forms
 from django_select2 import forms as s2forms
 
-from .models import Income, Expense, Student, Course, Lead
+from .models import Income, Expense, Student, Course, Lead, Employee
 
 
 class RangeWidget(forms.MultiWidget):
@@ -35,7 +35,13 @@ class StudentWidget(s2forms.ModelSelect2Widget):
 
 class LeadWidget(s2forms.ModelSelect2Widget):
     search_fields = [
-        "phone_number__icontains"
+        "phone_number__iregex"
+    ]
+
+
+class TeacherWidget(s2forms.ModelSelect2Widget):
+    search_fields = [
+        "full_name__iregex"
     ]
 
 
@@ -106,6 +112,10 @@ class StudentFilter(django_filters.FilterSet):
     created_date = DateFromToRangeFilter(
         field_name='created_date',
         widget=DateRangeWidget(attrs={'class': 'form-control'})
+    )
+    teacher = django_filters.ModelChoiceFilter(
+        queryset=Employee.objects.all(),
+        widget=TeacherWidget,
     )
 
     class Meta:

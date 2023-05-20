@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
     <title>LightCode</title>
 <html>
@@ -39,8 +41,8 @@ http://www.templatemo.com/tm-484-ocean
                         <div class="tm-wrapper-center">
                             <br><br>
                             <h1 class="tm-section-intro-title">Classroom</h1>
-                            <p class="tm-section-intro-text">Classroom — это бесплатный сервис, разработанный для учебных заведений, цель которого — упростить создание, распространение и оценивание заданий.<br></p>
-                            <a href="{% url 'home' %}" class="tm-btn-white-big">Войти</a>
+                            <p class="tm-section-intro-text">Classroom — {% trans 'это бесплатный сервис, разработанный для учебных заведений, цель которого — упростить создание, распространение и оценивание заданий.' %}<br></p>
+                            <a href="{% url 'home' %}" class="tm-btn-white-big">{% trans 'Войти' %}</a>
                         </div>
                     </div>
                 </div>
@@ -66,7 +68,7 @@ http://www.templatemo.com/tm-484-ocean
                                 <div class="carousel-item active">
                                     <div class="carousel-content">
                                         <div>
-                                            <p class="tm-carousel-item-text"> Основная цель Classroom — упростить процесс обмена файлами отправки между учителями и учениками.</p>
+                                            <p class="tm-carousel-item-text"> {% trans 'Основная цель Classroom — упростить процесс обмена файлами отправки между учителями и учениками.' %}</p>
                                         </div>
                                     </div>                               
                                 </div>
@@ -74,7 +76,7 @@ http://www.templatemo.com/tm-484-ocean
                                 <div class="carousel-item">
                                     <div class="carousel-content">
                                         <div>
-                                            <p class="tm-carousel-item-text">Класс экономит время и бумагу, а также позволяет легко создавать классы, распределять задания, общаться и оставаться организованным.</p>
+                                            <p class="tm-carousel-item-text">{% trans 'Класс экономит время и бумагу, а также позволяет легко создавать классы, распределять задания, общаться и оставаться организованным.' %}</p>
                                         </div>
                                     </div>                                
                                 </div>
@@ -82,7 +84,7 @@ http://www.templatemo.com/tm-484-ocean
                                 <div class="carousel-item">
                                     <div class="carousel-content">
                                         <div>
-                                            <p class="tm-carousel-item-text">Учащиеся могут отслеживать свои задания на странице «Задания» и приступать к работе одним щелчком мыши. Учителя могут быстро увидеть, кто выполнил или не выполнил задание, и поставить оценки прямо в Классе.</p>
+                                            <p class="tm-carousel-item-text">{% trans 'Учащиеся могут отслеживать свои задания на странице «Задания» и приступать к работе одним щелчком мыши. Учителя могут быстро увидеть, кто выполнил или не выполнил задание, и поставить оценки прямо в Классе.' %}</p>
                                         </div>
                                     </div>                                
                                 </div>
@@ -107,7 +109,7 @@ http://www.templatemo.com/tm-484-ocean
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-2-col-text">
                         <h2 class="tm-2-col-text-title">Easy to set up</h2>
                         <p class="tm-2-col-text-description">
-                            Учителя могут добавлять учеников напрямую или делиться кодом со своим классом, чтобы присоединиться. Настройка занимает всего несколько минут.
+                            {% trans 'Учителя могут добавлять учеников напрямую или делиться кодом со своим классом, чтобы присоединиться. Настройка занимает всего несколько минут.' %}
                         </p>
                     </div>
                     
@@ -126,7 +128,7 @@ http://www.templatemo.com/tm-484-ocean
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-2-col-text">
                         <h2 class="tm-2-col-text-title">Saves time</h2>
                         <p class="tm-2-col-text-description">
-                            Простой безбумажный рабочий процесс заданий позволяет учителям быстро создавать, просматривать и оценивать задания в одном месте.
+                            {% trans 'Простой безбумажный рабочий процесс заданий позволяет учителям быстро создавать, просматривать и оценивать задания в одном месте.' %}
                         </p>
                     </div>
                     
@@ -248,12 +250,6 @@ http://www.templatemo.com/tm-484-ocean
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                     <hr>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                    <p class="text-xs-center tm-copyright-text">Copyright &copy; 2022 MAT</p>
                 </div>
             </div>
             

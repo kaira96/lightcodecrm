@@ -1,21 +1,34 @@
 {% extends 'classroom/parent_class.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block head %}
 {% endblock %}
 
 {% block hamburger %}
+<style>
+@media (max-width: 400px) {
+    .classroom-card-title {
+        font-weight: 700;
+        font-size: 25px;
+    }
+}
+</style>
     <div class="jumbotron jumbotron-fluid class_jumbotron">
         <div class="container">
-        <h1 class="display-4 class_title">{{ classroom.classroom_name }}</h1>
-        <p class="lead class_code">Код класса: {{ classroom.class_code }}</p>
+        <h1 class="display-4 class_title classroom-card-title">{{ classroom.classroom_name }}</h1>
+        <p class="lead class_code">{% trans 'Код класса' %}: {{ classroom.class_code }}</p>
         </div>
     </div>
     <input type="hidden" id="assignment" name="assignment">
     <div class="contatiner_of_assignments">
       <div class="card assignment_card" style="width: 18rem;">
       <div class="card-body">
-      <h3 class="card-title">Менторы</h3><br>
+      <h3 class="card-title">{% trans 'Менторы' %}</h3><br>
       <h5 style="color: blue;">{{ teacher }}</h5>
+      {% for assistant in assistants %}
+        <h5 style="color: blue;">{{ assistant }}</h5>
+      {% endfor %}
       </div>
       </div>
       </div>
@@ -23,11 +36,28 @@
     <div class="contatiner_of_assignments">
       <div class="card assignment_card" style="width: 18rem;">
       <div class="card-body">
-      <h3 class="card-title">Студенты</h3><br>
+      <h3 class="card-title">{% trans 'Студенты' %}</h3><br>
           {% for student in students %}
-          <h5 style="color: black">{{ student }} </h5>
+            <h5 style="color: black; display: inline-block;">{{ student }}</h5>{% if user.is_admin or user.status == 4 %} <a href="{% url 'delete_student' student.id classroom.id %}" style="margin-left: 10px;">{% trans 'Удалить' %}</a> {% endif %}<br>
           {% endfor %}
       </div>
       </div>
       </div>
+<script>
+           const menu = document.querySelector('.sideBarMenuIcon');
+  const sideBar = document.querySelector('.sideBar');
+  const sideBarMenu = document.querySelector('.sideBarMenu');
+  // Проверяем, есть ли значение 'showMenu' в localStorage
+  const showMenu = localStorage.getItem('showMenu');
+  if (showMenu === 'true') {
+    sideBarMenu.classList.add('show');
+  }
+
+  menu.onclick = () => {
+    // Инвертируем состояние меню
+    sideBarMenu.classList.toggle('show');
+    // Сохраняем состояние меню в localStorage
+    localStorage.setItem('showMenu', sideBarMenu.classList.contains('show'));
+  }
+</script>
 {% endblock %}

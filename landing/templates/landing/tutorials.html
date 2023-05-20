@@ -1,63 +1,257 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block nav %}
+{% load i18n %}
 
-{% block content %}
-<br>
-<br>
-<br>
-<br>
-<center>
-  <div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png);">
-<div id="about" class="about-us section">
-        <div class="col-lg-6 align-self-center">
-          <div class="section-heading">
-            <div class="col-lg-6">
-              <div class="box-item">
-                <h4><em>Туториалы</em></h4>
-              </div>
-            </div>
-            <br>
-            {% if request.user.status == 4 %}
-              <div class="col-lg-6">
-                <div class="box-item">
-                  <h3><a href="{% url 'add_category' %}" ><em>Создать раздел для курсов</em></a></h3>
-                </div>
-              </div>
-            <br>
-             <div class="col-lg-6">
-                <div class="box-item">
-                  <h3><a href="{% url 'add_article' %}" ><em>Создать статью для курсов</em></a></h3>
-                </div>
-              </div>
-            <br>
-            {% endif %}
-            <h5>Развивайтесь в IT совершенно бесплатно: список курсов для самообразования</h5>
-            <div class="gradient-button">
-                <a><h5>"Ваша жизнь не улучшится, <br>пока вы не начнёте делать что-то новое"<br><br><h5 align="right">- Жим Рон.</h5></h5></a>
-              </div>
-            <br><br>
-            {% if user.is_authenticated %}
-              <div class="row" style="width: 90%">
-            {% for section in sections %}
-              <div class="col-lg-6" >
-              <div class="box-item">
-
-                <a href="{% url 'tutorial-detail' section.slug %}">
-                  <h3 style="color: blue;">{{ section.title }}</h3>
-                </a>
-              </div>
-            </div>
-            {% endfor %}
-            <div class="col-lg-12">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eismod tempor idunte ut labore et dolore adipiscing  magna.</p>
-            </div>
-          </div>
-            {% else %}
-            <h4>Для того, чтобы воспользоваться нашими сервисами, необходимо пройти процесс регистрации. Это займет всего несколько минут, но позволит вам получить доступ к множеству возможностей, которые мы предоставляем нашим зарегистрированным пользователям.</h4>
-            <br>
-            <h4><a href="{% url 'registration' %}">Зарегистрироваться</a></h4>
-            {% endif %}
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav" style="width: 1300px;">
+            <!-- ***** Logo Start ***** -->
+            <a href="{% url 'index' %}" class="logo">
+                <h4 style="color: black;"><br><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+  <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+</svg> LightCode</h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+<!--              {% if user.is_admin or user.status == 4 %}-->
+<!--              <li class="nav-item dropdown" style="color: black;">-->
+<!--                  <a class="nav-link dropdown-toggle" style="color: black;" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                      Прочее-->
+<!--                  </a>-->
+<!--                  <ul class="dropdown-menu" style="background: white; width: 390px; color: black;">-->
+<!--                      {% if user.is_admin or user.status == 4 %}-->
+<!--                        <li class="scroll-to-section" style="color: black;"><a href="{% url 'add_url_stream' %}" style="color: black;">&#9675; Создать ссылку на прямой эфир</a></li>-->
+<!--                      {% endif %}-->
+<!--                      {% if user.is_admin or user.status == 4 %}-->
+<!--                        <li class="scroll-to-section"><a href="{% url 'personal' %}">&#9675; CRM</a></li>-->
+<!--                      {% endif %}-->
+<!--                  </ul>-->
+<!--              </li>-->
+<!--              {% endif %}-->
+              <li class="scroll-to-section"><a href="{% url 'tutorials' %}">{% trans 'Туториалы' %}</a></li>
+              {% if not user.is_authenticated %}
+              <li class="scroll-to-section"><a href="{% url 'registration' %}">{% trans 'Авторизация' %}</a></li>
+              {% endif %}
+              {% if user.is_authenticated %}
+                <li class="scroll-to-section"><a href="{% url 'exit' %}">{% trans 'Выйти' %}</a></li>
+                <li>
+                    <div class="gradient-button">
+                        <a id="modal_trigger" href="{% url 'personal_area' %}">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/></svg>
+                        </a>
+                    </div>
+                </li>
+              {% endif %}
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
         </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% endblock nav %}
+{% block content %}
+<style>
+.sideBar {
+  position: fixed;
+  height: auto;
+  top: 0;
+  left: 0;
+  width: auto;
+  background: transparent;: #ccc;
+  list-style: none;
+  padding: 5px;
+  transition: 0.5s;
+  z-index: 999;
+}
+
+.sideBarInner {
+  display: grid;
+  justify-content: start;
+  gap: 12px 0;
+}
+
+.sideBarMenu {
+  height: 700px;
+  overflow-y: auto;
+  gap: 15px;
+  list-style: none;
+  padding: 10px;
+  background: #F9F9F9;
+}
+.sideBarMenuIcon {
+  cursor: pointer;
+}
+
+.sideBarItem {
+  cursor: pointer;
+  padding: 0 10px;
+  transition: 0.3s;
+}
+.sideBarItem:hover {
+  text-decoration: aliceblue;
+}
+
+/* Style the list */
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 8px;
+  color: black;
+  content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+.article-card-title {
+  font-size: 5vw;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.box-item {
+    width: 60%;
+    margin: 10px;
+}
+
+@media (max-width: 400px) {
+    .box-item {
+        width: 100%;
+    }
+    .room-card-title {
+        font-size: 20px;
+    }
+}
+@media screen and (max-width: 700px) {
+  div.section-heading {
+    font-size: 10px !important;
+  }
+}
+.sideBarMenu {
+    display: none;
+  }
+
+  /* Отображение меню, если localStorage содержит соответствующее значение */
+  .sideBarMenu.show {
+    display: block;
+  }
+</style>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png)">
+<div style="display: flex;">
+   <div class="sideBar">
+      <div class="sideBarInner">
+        <div class="sideBarMenuIcon">
+            <br><br><br><br>
+          <svg viewBox="0 0 100 80" width="30" height="30">
+            <rect width="100" height="10"></rect>
+            <rect y="30" width="100" height="10"></rect>
+            <rect y="60" width="100" height="10"></rect>
+          </svg>
+        </div>
+
+        <menu class="sideBarMenu">
+          {% for section in sections %}
+            <li><a href="{% url 'tutorial-detail' section.slug %}">{{ section }}</a></li><hr style="color: gray;">
+        {% endfor %}
+        </menu>
+      </div>
+    </div>
+
+
+    <div class="container mt-3" style="width: 75%; fon-size: 10px; display: flex; flex-wrap: wrap;">
+  <div id="about" class="about-us section" style="display: flex; flex-wrap: wrap;">
+    {% if user.is_admin or user.status == 4 %}
+      <div class="col-lg-6" style="flex-basis: 50%; max-width: 50%;">
+        <div class="section-heading" style="width: 100%; font-size: 23px;"><div class="container">
+            <div class="box-item">
+                <a href="{% url 'add_category' %}">Создать раздел для курсов</a>
+            </div>
+        </div>
+        </div>
+      </div>
+      <div class="col-lg-6" style="flex-basis: 50%; max-width: 50%;">
+        <div class="section-heading" style="width: 100%;">
+          <div class="box-item" style="width: 60%;">
+              <div class="container">
+                  <a href="{% url 'article_list' %}" style="font-size: 23px;">Статьи</a>
+              </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+<!--      <div class="container">-->
+<!--          <ul class="breadcrumb">-->
+<!--              <li><a href="{% url 'index' %}">Главная</a></li>-->
+<!--    &lt;!&ndash;              <li><a href="{% url 'tutorials' %}">Туториалы</a></li>&ndash;&gt;-->
+<!--          </ul>-->
+<!--      </div>-->
+      <div class="container mt-3" style="width: 75%; fon-size: 10px; display: flex; flex-wrap: wrap;">
+          <h2 style="">{% trans 'О сайте' %}</h2>
+          <h10 style="color: black;">{% trans "Данный сайт посвящен различным языкам и технологиям программирования, компьютерам, мобильным платформам и ИТ-технологиям. Здесь будут выкладываться различные руководства и учебные материалы, статьи и примеры.<br><br>На сайте можно найти материалы по таким направлениям, как язык C# и семейство технологий .NET (ASP.NET, WPF, Entity Framework и т.д.), технологии на базе Java ( Java SE, программирование под ОС Андроид и т.д.), Python, Dart (в том числе Flutter), работа с базами данных (MS SQL Server, MySQL, MongoDB) а также WEB-технологии, такие как HTML5, AJAX, jQuery, Node.js, ExtJS, Angular, React и др.<br><br>Поскольку жизнь не стоит на месте, все материалы по возможности дополняются и обновляются, чтобы соответствовать духу времени и не терять своей актуальности." %}<br><br></h10>
+          <div class="gradient-button">
+              <a>{% trans 'Спасибо за посещение сайта.' %}</a>
+          </div>
+      </div>
   </div>
-{% endblock %}
+</div>
+</div>
+<script>
+  const menu = document.querySelector('.sideBarMenuIcon');
+  const sideBar = document.querySelector('.sideBar');
+  const sideBarMenu = document.querySelector('.sideBarMenu');
+
+  // Проверяем, есть ли значение 'showMenu' в localStorage
+  const showMenu = localStorage.getItem('showMenu');
+  if (showMenu === 'true') {
+    sideBarMenu.classList.add('show');
+  }
+
+  menu.onclick = () => {
+    // Инвертируем состояние меню
+    sideBarMenu.classList.toggle('show');
+    // Сохраняем состояние меню в localStorage
+    localStorage.setItem('showMenu', sideBarMenu.classList.contains('show'));
+  }
+</script>
+    {% endblock %}
+
+
 

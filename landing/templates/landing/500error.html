@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+{% block content %}
+<br><br><br>
+<br><br><br>
+<center>
+    <div class="container mt-3" style="width: 55%; fon-size: 10px;">
+        <h1>500</h1><br>
+        <h4>{% trans 'К сожалению, возникла ошибка 500' %}</h4><br><br>
+        <h6>{% trans 'Это означает, что на сервере произошла внутренняя ошибка и запрошенная вами страница не может быть загружена. Наша команда работает над исправлением проблемы, но если проблема не исчезнет, пожалуйста, свяжитесь с нами, чтобы мы могли помочь вам получить доступ к необходимой информации. Приносим извинения за неудобства, и благодарим вас за ваше терпение.' %}</h6><br><br>
+        <button class="btn btn-primary"><a href="{% url 'index' %}" style="color: white;">{% trans 'Вернуться на главную страницу' %}</a></button>
+    </div>
+</center>
+{% endblock %}

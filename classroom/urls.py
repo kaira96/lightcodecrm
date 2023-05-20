@@ -19,6 +19,7 @@ urlpatterns = [
     # path('submit_assignment_request/<int:assignment_id>/', views.submit_assignment_request, name='submit_assignment_request'),
     path('mark_submission_request/<int:submission_id>/', views.mark_submission, name='mark_submission'),
     path('sending_a_task/<int:pk>/', views.sending_a_task, name='sending_a_task'),
-    # path('group_list/<int:pk>/', views.group_list, name='group_list'),
-    # path('add_student/<int:pk>/', views.add_student, name='add_student'),
+    path('group_list/<int:pk>/', views.group_list, name='group_list'),
+    path('add_student/<int:pk>/', views.add_student, name='add_student'),
+    path('delete_student/<int:pk>/<int:classroom_id>/', views.delete_student, name='delete_student'),
 ]

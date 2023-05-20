@@ -1,78 +1,242 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block nav %}
+{% load i18n %}
 
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky wow slideInDown" data-wow-duration="0.75s" data-wow-delay="0s">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <nav class="main-nav">
+            <!-- ***** Logo Start ***** -->
+            <a href="{% url 'index' %}" class="logo">
+                <h4 style="color: black;"><br><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+  <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6zm3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5z"/>
+</svg> LightCode</h4>
+            </a>
+            <!-- ***** Logo End ***** -->
+            <!-- ***** Menu Start ***** -->
+            <ul class="nav">
+              <li class="scroll-to-section"><a href="{% url 'tutorials' %}">{% trans 'Туториалы' %}</a></li>
+              {% if not user.is_authenticated %}
+              <li class="scroll-to-section"><a href="{% url 'registration' %}">{% trans 'Авторизация' %}</a></li>
+              {% endif %}
+              {% if user.is_authenticated %}
+                <li class="scroll-to-section"><a href="{% url 'exit' %}">{% trans 'Выйти' %}</a></li>
+                <li>
+                    <div class="gradient-button">
+                        <a id="modal_trigger" href="{% url 'personal_area' %}">&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/></svg>
+                        </a>
+                    </div>
+                </li>
+              {% endif %}
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+            <!-- ***** Menu End ***** -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% endblock nav %}
 {% block content %}
 <style>
-.topnav {
-  background-color: #63707D;
-  overflow: hidden;
-  width: 15%;
+.sideBar {
+  position: fixed;
+  height: auto;
+  top: 0;
+  left: 0;
+  width: auto;
+  background: transparent;: #ccc;
+  list-style: none;
+  padding: 5px;
+  transition: 0.5s;
+  z-index: 999;
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+.sideBarInner {
+  display: grid;
+  justify-content: start;
+  gap: 12px 0;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
+.sideBarMenu {
+  height: 700px;
+  overflow-y: auto;
+  gap: 15px;
+  list-style: none;
+  padding: 10px;
+  background: #F9F9F9;
+}
+.sideBarMenuIcon {
+  cursor: pointer;
+}
+
+.sideBarItem {
+  cursor: pointer;
+  padding: 0 10px;
+  transition: 0.3s;
+}
+.sideBarItem:hover {
+  text-decoration: aliceblue;
+}
+
+/* Style the list */
+ul.breadcrumb {
+  padding: 10px 16px;
+  list-style: none;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+  display: inline;
+  font-size: 18px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+  padding: 8px;
   color: black;
+  content: "/\00a0";
 }
 
-/* Add a color to the active/current link */
-.topnav a.active {
-  background-color: #04AA6D;
-  color: white;
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+  color: #0275d8;
+  text-decoration: none;
 }
 
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+  color: #01447e;
+  text-decoration: underline;
+}
+.sideBarMenu {
+    display: none;
+  }
+
+/* Отображение меню, если localStorage содержит соответствующее значение */
+.sideBarMenu.show {
+display: block;
+}
+.box-item h4 {
+  color: blue;
+  font-size: 1.7vw; /* начальный размер шрифта */
+  max-width: 100%;
+  max-font-size: 20px; /* максимальный размер шрифта */
+  min-font-size: 12px; /* минимальный размер шрифта */
+}
+
+/* Медиа-запрос для устройств с шириной экрана меньше 768 пикселей */
+@media (max-width: 467px) {
+  .box-item h4 {
+    font-size: 16px; /* задаем размер шрифта для устройств с маленькими экранами */
+    max-font-size: 16px; /* убираем максимальный размер шрифта */
+    min-font-size: 16px; /* убираем минимальный размер шрифта */
+  }
+}
 </style>
-<br>
-<br>
-<br>
-<br>
-<div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png);">
-<div style="height: 100vh !important; overflow-y: auto; padding: none !important; margin:0% !important" >
-<br><br><br><br><br>
-    <center>
-        <div class="col-lg-6">
-            {% if not is_subscribed %}
-                <h5 >Только до конца этой недели! Запишитесь на курс и получите бесплатный доступ к материалам, которые помогут вам стать экспертом в "{{ section.title }}"</h5>
-            {% endif %}
-        </div><br>
-<div class="gradient-button">
-    <a><h5>"Лучший способ обрести успех<br> - начать действовать сейчас"<br><br><h5 align="right">- Наполеон Хилл</h5></h5></a>
-</div>
-<div id="about" class="about-us section">
-    <div class="box-item" style="width: 40%;">
-        <h3><em>Все темы по программе: {{ section.title }}</em></h3>
-    </div>
-    {% if is_subscribed %}
-        <div class="col-lg-6 align-self-center">
-        <div class="section-heading">
-            <div class="col-lg-6">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<script>hljs.highlightAll();</script>
+<div style="background-image: url(https://oir.mobi/uploads/posts/2021-03/1616435811_9-p-belii-fon-gradient-11.png)">
+    <div style="display: flex;">
+   <div class="sideBar">
+      <div class="sideBarInner">
+        <div class="sideBarMenuIcon">
+            <br><br><br><br>
+          <svg viewBox="0 0 100 80" width="30" height="30">
+            <rect width="100" height="10"></rect>
+            <rect y="30" width="100" height="10"></rect>
+            <rect y="60" width="100" height="10"></rect>
+          </svg>
+        </div>
+
+        <menu class="sideBarMenu">
+          <h5><strong>{{ section.title }}:</strong></h5>
+            {% if is_subscribed or is_creator %}
                 {% for article in articles %}
-                    <a href="{% url 'content_view' article.slug %}"><div class="box-item">
-                        <h4><em>{{ article.topic_name }}</em></h4>
-                    </div>
-                        </a>
+                    <li><a href="{% url 'content_view' article.slug %}">{{ article.topic_name }}</a></li><hr style="color: gray;">
                 {% endfor %}
+            {% endif %}
+        </menu>
+      </div>
+    </div>
+        <div class="container mt-3" style="width: 75%; fon-size: 10px; display: flex; flex-wrap: wrap;">
+            {% if is_subscribed or is_creator %}
+                <div id="about" class="about-us section" style="display: flex; flex-wrap: wrap;">
+            {% else %}
+                <div id="about" class="about-us section" style="display: flex; flex-wrap: wrap;">
+            {% endif %}
+                <div class="col-lg-6" style="width: 100%;">
+                    <center>
+                        <div class="box-item" style="width: 30%;">
+                            <center><h4 style="color: blue;"><em>{% trans 'Ментор' %} : {{ articles.first.teacher }}</em></h4></center>
+                        </div>
+                    </center>
+                </div>
+                <div class="container" style="text-align: center;">
+                    <ul class="breadcrumb">
+                        <li><a href="{% url 'index' %}">{% trans 'Главная' %}</a></li>
+                        <li><a href="{% url 'tutorials' %}">{% trans 'Туториалы' %}</a></li>
+                        <li><a href="{% url 'tutorial-detail' section.id_section.slug %}">{{ section.id_section.title }}</a></li>
+                        <li><a>...</a></li>
+                    </ul>
+                </div>
+
+                {% if not is_creator %}
+                    {% if not is_subscribed %}
+                        <div class="col-lg-6" style="width: 100%;">
+                            <center>
+                                <div class="box-item" style="width: 60%;">
+                                    <center><h5>{% trans 'Только до конца этой недели!' %}<br><br> {% trans 'Запишитесь на курс и получите бесплатный доступ к материалам' %},<br> {% trans 'которые помогут вам стать экспертом в' %} "{{ section.title }}"</h5></center>
+                                </div>
+                            </center>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                {% if is_subscribed or is_creator %}
+                    <div class="container mt-3" style="width: 75%; fon-size: 10px; display: flex; flex-wrap: wrap;">
+                        <h2 style="">{% trans 'О разделе' %}</h2>
+                        <h10 style="color: black;">{{ section.id_section.description }}</h10>
+                    </div>
+                {% else %}
+                <div class="col-lg-6 text-center" style="width: 100%;">
+                    <div class="d-flex justify-content-center">
+                        <form method="POST" action=".">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary">{% trans 'Записаться' %}</button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
-    {% else %}
-        <h4>Запишитесь на курс "{{ section.title }}", что бы иметь доступ к бесплатному материалу</h4><br>
-        <form method="POST" action=".">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Записаться</button>
-        </form>
-    {% endif %}
-</div>
-</center>
-{% endblock %}
+<script>
+  const menu = document.querySelector('.sideBarMenuIcon');
+  const sideBar = document.querySelector('.sideBar');
+  const sideBarMenu = document.querySelector('.sideBarMenu');
+
+  // Проверяем, есть ли значение 'showMenu' в localStorage
+  const showMenu = localStorage.getItem('showMenu');
+  if (showMenu === 'true') {
+    sideBarMenu.classList.add('show');
+  }
+
+  menu.onclick = () => {
+    // Инвертируем состояние меню
+    sideBarMenu.classList.toggle('show');
+    // Сохраняем состояние меню в localStorage
+    localStorage.setItem('showMenu', sideBarMenu.classList.contains('show'));
+  }
+</script>
+    {% endblock %}
 

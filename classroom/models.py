@@ -1,6 +1,13 @@
 from django.db import models
 from django.conf import settings
 from datetime import datetime
+from googletrans import Translator
+
+
+translator = Translator(service_urls=[
+            'translate.google.com',
+            'translate.google.co.kr',
+        ])
 
 
 class Classroom(models.Model):
@@ -9,12 +16,27 @@ class Classroom(models.Model):
     class_code = models.CharField(max_length=10, default='0000000')
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
+    def save(self, *args, **kwargs):
+
+        text_classroom_name = self.classroom_name
+        text_section = self.section
+
+        ky_classroom_name = translator.translate(str(text_classroom_name), 'ky')
+        # print(a.text)
+        self.classroom_name_ky = ky_classroom_name.text
+
+        ky_section = translator.translate(str(text_section), 'ky')
+        # print(a.text)
+        self.section_ky = ky_section.text
+
+        super().save()
+
     def __str__(self):
         return self.classroom_name
 
 
 class Student(models.Model):
-    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='Студент')
+    student = models.ForeignKey('account.MyUser', on_delete=models.CASCADE, verbose_name='Студент')
     classroom = models.ForeignKey(Classroom, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
 
@@ -23,8 +45,9 @@ class Student(models.Model):
 
     def save(self, *args, **kwargs):
         user = self.student
-        user.status = 2
-        user.save()
+        if user.status != 4:
+            user.status = 2
+            user.save()
         return super().save(*args, **kwargs)
 
     class Meta:
@@ -59,6 +82,21 @@ class Assignment(models.Model):
     posted_date = models.DateField(auto_now_add=True, verbose_name='Дата создания')
     instruction = models.TextField(verbose_name='Инструкция')
     total_marks = models.PositiveSmallIntegerField(default=100, verbose_name='Максимальное количество баллов')
+
+    def save(self, *args, **kwargs):
+
+        text_assignment_name = self.assignment_name
+        text_instruction = self.instruction
+
+        ky_assignment_name = translator.translate(str(text_assignment_name), 'ky')
+        # print(a.text)
+        self.assignment_name_ky = ky_assignment_name.text
+
+        ky_instruction = translator.translate(str(text_instruction), 'ky')
+        # print(a.text)
+        self.instruction_ky = ky_instruction.text
+
+        super().save()
 
     def __str__(self):
         return self.assignment_name
